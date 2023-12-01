@@ -22,6 +22,7 @@ class RobotDescriptionLoader():
         self.use_d435 = 'false'
         self.gz_control_config_package = ''
         self.gz_control_config_file_path = ''
+        self.hardware_type = 'mock'
 
     def load(self):
         return Command([
@@ -35,5 +36,6 @@ class RobotDescriptionLoader():
                 ' use_gazebo:=', self.use_gazebo,
                 ' use_d435:=', self.use_d435,
                 ' gz_control_config_package:=', self.gz_control_config_package,
-                ' gz_control_config_file_path:=', self.gz_control_config_file_path
+                ' gz_control_config_file_path:=', self.gz_control_config_file_path,
+                ' hardware_type:=', self.hardware_type
                 ])

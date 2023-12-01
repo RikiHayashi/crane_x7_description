@@ -22,6 +22,8 @@
   <xacro:arg name="manipulator_links_file_path" default="" />
   <xacro:arg name="gz_control_config_package" default="" />
   <xacro:arg name="gz_control_config_file_path" default="" />
+  <xacro:arg name="initial_positions_file" default="$(find crane_x7_description)/urdf/initial_positions.yaml"/>
+  <xacro:arg name="hardware_type" default="mock" />
 
   <!-- Link to provide the location reference for the arm -->
   <link name="base_link"/>
@@ -217,6 +219,8 @@
       timeout_seconds="$(arg timeout_seconds)"
       manipulator_config_file_path="$(arg manipulator_config_file_path)"
       manipulator_links_file_path="$(arg manipulator_links_file_path)"
+      initial_positions_file="$(arg initial_positions_file)"
+      hardware_type="$(arg hardware_type)"
       />
 
   </xacro:unless>

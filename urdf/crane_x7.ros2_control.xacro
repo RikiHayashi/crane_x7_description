@@ -32,11 +32,19 @@
             timeout_seconds
             manipulator_config_file_path
             manipulator_links_file_path
+	    initial_positions_file
+	    hardware_type
             ">
+    <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
 
     <ros2_control name="${name}" type="system">
       <hardware>
-        <plugin>crane_x7_hardware/CraneX7Hardware</plugin>
+	<xacro:if value="${hardware_type == 'mock'}">
+	  <plugin>mock_components/GenericSystem</plugin>
+  	</xacro:if>
+	<xacro:if value="${hardware_type == 'real'}">
+	  <plugin>crane_x7_hardware/CraneX7Hardware</plugin>
+  	</xacro:if>
         <param name="port_name">${port_name}</param>
         <param name="baudrate">${baudrate}</param>
         <param name="timeout_seconds">${timeout_seconds}</param>
@@ -49,7 +57,9 @@
           <param name="min">${joint_1_lower_limit}</param>
           <param name="max">${joint_1_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_shoulder_fixed_part_pan_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">2.20</param>
@@ -60,7 +70,9 @@
           <param name="min">${joint_2_lower_limit}</param>
           <param name="max">${joint_2_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_shoulder_revolute_part_tilt_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">3.60</param>
@@ -71,7 +83,9 @@
           <param name="min">${joint_3_lower_limit}</param>
           <param name="max">${joint_3_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_upper_arm_revolute_part_twist_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">2.20</param>
@@ -82,7 +96,9 @@
           <param name="min">${joint_4_lower_limit}</param>
           <param name="max">${joint_4_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_upper_arm_revolute_part_rotate_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">2.20</param>
@@ -93,7 +109,9 @@
           <param name="min">${joint_5_lower_limit}</param>
           <param name="max">${joint_5_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_lower_arm_fixed_part_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">2.20</param>
@@ -104,7 +122,9 @@
           <param name="min">${joint_6_lower_limit}</param>
           <param name="max">${joint_6_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_lower_arm_revolute_part_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">2.20</param>
@@ -115,7 +135,9 @@
           <param name="min">${joint_7_lower_limit}</param>
           <param name="max">${joint_7_upper_limit}</param>
         </command_interface>
-        <state_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['crane_x7_wrist_joint']}</param>
+	</state_interface>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
         <param name="current_to_effort">2.20</param>
